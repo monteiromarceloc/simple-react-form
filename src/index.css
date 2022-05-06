@@ -15,11 +15,7 @@ body {
   height: 100%;
 }
 
-.App {
-  text-align: center;
-}
-
-.App-page {
+.home_page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -29,22 +25,13 @@ body {
   padding: 20px;
 }
 
-.App-link {
-  position: absolute;
-  bottom: 32px;
-  font-size: 16px;
-  color: #61dafb;
-  text-decoration: none;
-}
-
 h4 {
   font-size: calc(10px + 2vmin);
   font-weight: 300;
-  margin: 12px;
+  margin: 18px;
 }
 
-input,
-textarea {
+input {
   border: 1px solid rgba(252, 252, 252, 0.4);
   background-color: rgba(252, 252, 252, 0.2);
   width: 100%;
@@ -52,22 +39,28 @@ textarea {
   border-radius: 3px;
   font-family: "Source Sans Pro", sans-serif;
   padding: 10px 15px;
-  margin: 0 auto 16px auto;
+  margin: 0 auto 24px auto;
   display: block;
-  text-align: center;
+  text-align: left;
   font-size: 18px;
   color: white;
   font-weight: 300;
 }
 
-.center-form {
+p {
+  margin: 0 0 24px 0;
+  width: 100%;
+  text-align: left;
+}
+
+.home_form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  ;
+  width: 400px;
 }
 
-.home-button {
+.home_button {
   appearance: none;
   outline: 0;
   background-color: white;
@@ -80,77 +73,16 @@ textarea {
   transition: .3s;
 }
 
-.home-button:hover {
+.home_button:hover {
   background-color: #61dafbdd;
 }
 
-.New-patient-container {
-  background-color: #aaa;
-  color: black;
-  border-radius: 8px;
-  width: 60%;
-  min-width: 300px;
-  padding: 12px 20px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  cursor: pointer;
-  transition: .3s;
+.home_error-message {
+  color: #F55;
 }
 
-.New-patient-container:hover {
-  background-color: #ddd;
-}
-
-.Accept-patient-button {
-  background-color: #3a6;
-  color: black;
-  border-radius: 8px;
-  border: 1px solid #333;
-  padding: 6px 20px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  cursor: pointer;
-  transition: .3s;
-}
-
-.Accept-patient-button:hover {
-  font-weight: 500;
-}
-
-.Row-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.Toastfy__close-button {
-  max-width: 20px;
-}
-
-.choose-wrapper {
-  background-color: white;
-  border: 0;
-  padding: 10px 15px;
-  color: black;
-  border-radius: 3px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  text-align: start;
-  width: 80vw;
-  max-width: ;
-
-  transition: .3s;
-  cursor: pointer;
-  position: relative;
-}
-
-.choose-wrapper:hover {
-  background-color: #ddd;
+.home_sucess-message {
+  color: #5C5;
 }
 
 .tick-icon {
