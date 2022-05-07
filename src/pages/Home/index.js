@@ -7,6 +7,7 @@ function Home() {
     const [password, setPassword] = useState("");
     const [validationErrors, setValidationErrors] = useState([]);
     const [isValid, setIsValid] = useState(false);
+    const [submitError, setSubmitError] = useState(false);
 
     const validatePassword = () => {
         let errors = [];
@@ -26,10 +27,17 @@ function Home() {
             // API call
             setIsValid(true);
             try {
-               // ...
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })
+                };
+                const data = await fetch('https://61e036950f3bdb0017934eb0.mockapi.io/api/valid-passwords/result', requestOptions)
+                if (data.status !== 201) throw new Error()
                 
             } catch (error) {
-                // ...
+                console.log(error);
+                setSubmitError(true);
             }
         }
     }
@@ -65,7 +73,13 @@ function Home() {
                     : isValid ? <p className="home_sucess-message">Senha válida</p>
                     : <></>
                 }
-                <button className="home_button" onClick={handleSubmit}>Enviar</button>
+                <div className="home_form-row">
+                    {
+                        submitError &&
+                        <p className="home_error-message">Falha ao enviar resultado. Tente novamente.</p>
+                    }
+                    <button className="home_button" onClick={handleSubmit}>Enviar</button>
+                </div>
             </form>
         </div>
     );
