@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { hasGrowingNumbers, hasSameNumberTwice } from "../../utils/validators";
+import React, { useEffect, useState } from "react";
+import { sendData } from "../../services/api";
+import { hasGrowingNumbers, hasSameNumberTwice } from "../../services/validators";
 
 function Home() {
     const [name, setName] = useState("");
@@ -7,7 +8,9 @@ function Home() {
     const [password, setPassword] = useState("");
     const [validationErrors, setValidationErrors] = useState([]);
     const [isValid, setIsValid] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [submitError, setSubmitError] = useState(false);
+    const buttonDisabled = !name || !email || !password || isLoading;
 
     const validatePassword = () => {
         let errors = [];
@@ -24,21 +27,17 @@ function Home() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (validatePassword()) {
-            // API call
             setIsValid(true);
+            setIsLoading(true);
             try {
-                const requestOptions = {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, password })
-                };
-                const data = await fetch('https://61e036950f3bdb0017934eb0.mockapi.io/api/valid-passwords/result', requestOptions)
-                if (data.status !== 201) throw new Error()
+                const status = await sendData({ name, email, password });
+                if (status !== 201) throw new Error()
                 
             } catch (error) {
                 console.log(error);
                 setSubmitError(true);
             }
+            setIsLoading(false);
         }
     }
 
@@ -78,7 +77,12 @@ function Home() {
                         submitError &&
                         <p className="home_error-message">Falha ao enviar resultado. Tente novamente.</p>
                     }
-                    <button className="home_button" onClick={handleSubmit}>Enviar</button>
+                    <button className={`home_button ${buttonDisabled ? 'disabled' : ''}`} onClick={handleSubmit} disabled={buttonDisabled}>
+                        {
+                            isLoading ? <div className="loader">Loading</div>
+                            : "Enviar"
+                        }
+                    </button>
                 </div>
             </form>
         </div>
