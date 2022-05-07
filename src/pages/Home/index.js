@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { sendData } from "../../services/api";
-import { hasGrowingNumbers, hasSameNumberTwice } from "../../services/validators";
+import { validatePassword } from "../../services/validation";
 
 function Home() {
     const [name, setName] = useState("");
@@ -12,21 +12,9 @@ function Home() {
     const [submitError, setSubmitError] = useState(false);
     const buttonDisabled = !name || !email || !password || isLoading;
 
-    const validatePassword = () => {
-        let errors = [];
-        if (!password.match(/^[0-9]+$/)) errors.push("A senha deve conter apenas números");
-        if (password.length !== 6) errors.push("A senha deve conter 6 digitos");
-        if (password < 184759 || password > 856920) errors.push("A senha deve estar entre os numeros 184759 e 856920"); // A menor senha possível é 222222
-        if(!hasSameNumberTwice(password)) errors.push("A senha deve conter 2 digitos adjacentes iguais");
-        if(!hasGrowingNumbers(password)) errors.push("A senha deve conter digitos numa sequencia crescente ou de mesmo valor");
-
-        setValidationErrors(errors);
-        return errors.length === 0;
-    }
-
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (validatePassword()) {
+        if (validatePassword(password, setValidationErrors)) {
             setIsValid(true);
             setSubmitError(false);
             setIsLoading(true);
@@ -82,7 +70,7 @@ function Home() {
                         : <></>
                     }
 
-                    <button className={`home_button ${buttonDisabled ? 'disabled' : ''}`} onClick={handleSubmit} disabled={buttonDisabled}>
+                    <button className={`home_button ${buttonDisabled ? 'disabled' : ''}`} onClick={handleSubmit} disabled={buttonDisabled} type="button" >
                         {
                             isLoading ? <div className="loader">Loading</div>
                             : "Enviar"
