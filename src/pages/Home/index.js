@@ -28,7 +28,9 @@ function Home() {
         event.preventDefault();
         if (validatePassword()) {
             setIsValid(true);
+            setSubmitError(false);
             setIsLoading(true);
+
             try {
                 const status = await sendData({ name, email, password });
                 if (status !== 201) throw new Error()
@@ -67,16 +69,19 @@ function Home() {
                 {
                     validationErrors.length ? <p className="home_error-message">
                         Senha inválida
-                        { validationErrors.map(e => <li>{e}</li>) }
+                        { validationErrors.map(e => <li key={e}>{e}</li>) }
                     </p>
                     : isValid ? <p className="home_sucess-message">Senha válida</p>
                     : <></>
                 }
                 <div className="home_form-row">
                     {
-                        submitError &&
-                        <p className="home_error-message">Falha ao enviar resultado. Tente novamente.</p>
+                        (isValid && !isLoading) ? submitError ?
+                            <p className="home_error-message">Falha ao enviar resultado. Tente novamente.</p>
+                            : <p className="home_sucess-message">Resultado enviado com sucesso!</p>
+                        : <></>
                     }
+
                     <button className={`home_button ${buttonDisabled ? 'disabled' : ''}`} onClick={handleSubmit} disabled={buttonDisabled}>
                         {
                             isLoading ? <div className="loader">Loading</div>
