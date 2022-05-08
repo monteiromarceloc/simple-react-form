@@ -1,5 +1,4 @@
 export const validatePassword = (password, setErrors) => {
-    console.log('__ CALLED')
     let errors = [];
     if (!password.match(/^[0-9]+$/)) errors.push("A senha deve conter apenas números");
     if (password.length !== 6) errors.push("A senha deve conter 6 digitos");
