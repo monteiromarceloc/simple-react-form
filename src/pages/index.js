@@ -1,7 +1,7 @@
 import * as React from "react";
 import Home from './Home';
 
-function Router() {
+function App() {
   return (
     <div>
       <Home />
@@ -9,4 +9,4 @@ function Router() {
   );
 }
 
-export default Router;
+export default App;

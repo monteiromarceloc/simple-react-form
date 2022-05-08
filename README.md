@@ -11,10 +11,12 @@
 
 ## Executando os testes
 
+1. Execute o comando: `npm tests`
+
 ## Sobre o projeto
 
-O projeto foi iniciado a partir do create-react-app e consiste em um formulário com validação nos campos. Há uma função exclusiva para validar as regras definidas para a senha. Caso novas regras surjam, podem ser acrescentadas lá. 
+O projeto foi iniciado a partir do create-react-app e consiste em um formulário com validação nos campos. Em `src/pages` encontram-se os componentes correspondentes às telas da aplicação. Em `src/services` estão arquivos responsáveis pela comunicação com a API e pela validação das regras da senha. Caso novas regras surjam, podem ser acrescentadas lá. 
 
-Como há apenas uma tela, não foi implementada nenhuma estratégia para rotas, mas pode ser implementada facilmente se necessário, pois o arquivo pages/Router.js pode assumir essa função. Para estilizacão, foi utilizado CSS convencional e padrão BEM.
+Como há apenas uma tela, não foi implementada nenhuma estratégia para rotas, mas pode ser implementada facilmente se necessário, no arquivo `pages/index.js`. Para estilizacão, foi utilizado CSS convencional e padrão BEM.
 
-Poderiam ter sido utilizadas blibliotecas como: react-router-dom, yup, axios, styled-components para proporcionar maior escalabilidade, mas optou-se por não utiliza-las para minimizar a quantidade de boilerplate code no projeto.
+Poderiam também ter sido utilizadas blibliotecas como: react-router-dom, yup, axios, styled-components para proporcionar maior escalabilidade, mas optou-se por não utiliza-las para minimizar a quantidade de boilerplate code no projeto.

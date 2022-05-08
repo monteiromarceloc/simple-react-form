@@ -1,55 +1,57 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
-import App from './pages/App';
+import { fireEvent, render, screen } from '@testing-library/react';
+import Home from './pages/Home';
 
-const mockSend = jest.fn();
-const mockValidate = jest.fn();
-
-describe('Form component', () => {
+describe('Home Form Component', () => {
 
   let field1, field2, field3, btn;
 
-  beforeAll(() => {
-    jest.mock('./services/validation', () => ({
-      validatePassword: mockValidate
-    }));
-    
-    jest.mock('./services/api', () => ({
-      sendData: mockSend
-    }));
-
-    render(<App />);
+  beforeEach(() => {
+    render(<Home />);
     field1 = screen.getByPlaceholderText("Nome");
     field2 = screen.getByPlaceholderText("Email");
     field3 = screen.getByPlaceholderText("Senha");
     btn = screen.getByText("Enviar");
-  })
+  });
   
-  // it('should render correctly', () => {
-  //   expect(field1.value).toBe("");
-  //   expect(field2.value).toBe("");
-  //   expect(field3.value).toBe("");
-  //   expect(btn).toHaveClass("disabled")
-  // });
+  it('should render correctly', () => {
+    expect(field1.value).toBe("");
+    expect(field2.value).toBe("");
+    expect(field3.value).toBe("");
+    expect(btn).toBeDisabled();
+  });
 
-  // it('should not send if there are empty fields', () => {
-  //   fireEvent.click(btn);
-  //   expect(mockValidate).not.toHaveBeenCalled();
-  //   expect(mockSubmit).not.toHaveBeenCalled();
-  // });
+  it('should not send if there are empty fields', async () => {
+    fireEvent.change(field3, { target: { value: "222222" } });
+    fireEvent.click(btn);
+    expect(btn).toBeDisabled();
+  });
 
   it('should validate password but not send if rules are not followed', async () => {
+    fireEvent.change(field1, { target: { value: "Nome teste" } });
+    fireEvent.change(field2, { target: { value: "teste@email.com" } });
+    fireEvent.change(field3, { target: { value: "123456" } });
+    fireEvent.click(btn);
+    expect(screen.getByText("Senha inválida")).toBeInTheDocument();
+  });
 
-    act(() => {
-      fireEvent.change(field1, { target: { value: "Nome teste" } });
-      fireEvent.change(field2, { target: { value: "teste@email.com" } });
-      fireEvent.change(field3, { target: { value: "123456" } });
-    });
+  it('should validate passwords that matches pattern', async () => {
+    fireEvent.change(field1, { target: { value: "Nome teste" } });
+    fireEvent.change(field2, { target: { value: "teste@email.com" } });
+    fireEvent.change(field3, { target: { value: "222222" } });
+    expect(btn).toBeEnabled();
 
     fireEvent.click(btn);
+    expect(screen.getByText("Senha válida")).toBeInTheDocument();
+  });
 
-    expect(mockValidate).toHaveBeenCalled();
-    expect(mockSend).not.toHaveBeenCalled();
-  })
+  it('should disable button while sending data', async () => {
+    fireEvent.change(field1, { target: { value: "Nome teste" } });
+    fireEvent.change(field2, { target: { value: "teste@email.com" } });
+    fireEvent.change(field3, { target: { value: "222222" } });
+    expect(btn).toBeEnabled();
+    fireEvent.click(btn);
+    expect(btn).toBeDisabled();
+  });
 
 });
 
